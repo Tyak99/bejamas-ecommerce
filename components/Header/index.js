@@ -1,12 +1,11 @@
 const Header = () => {
   return (
-    <>
-      <div className="flex justify-between items-center px-4">
+    <div className='h-20 flex items-center border-b-4 border-solid border-grey'>
+      <div className="flex justify-between px-4 w-full">
         <h1 className='text-xl font-semibold'> BEJAMAS_ </h1>
-        <img src="/shopping-cart.svg" alt="Shopping Cart" className="w-8" />
+        <img src="/shopping-cart.svg" alt="Shopping Cart" className="w-7" />
       </div>
-      <hr className="my-4" />
-    </>
+    </div>
   );
 };
 

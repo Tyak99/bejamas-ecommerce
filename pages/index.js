@@ -3,9 +3,9 @@ import Header from "../components/Header";
 
 export default function Home() {
   return (
-    <div className="container my-4">
+    <div className="container">
       <Header />
-      <div className="mx-auto px-4">
+      <div className="mx-auto px-4 my-4">
         <b>
           <h1 className="text-3xl"> Samurai King Resting </h1>
         </b>
