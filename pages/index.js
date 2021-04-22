@@ -2,6 +2,16 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/Header";
 
+const categories = [
+  "People",
+  "Premium",
+  "Pets",
+  "Food",
+  "Landmarks",
+  "Cities",
+  "Nature",
+];
+
 export default function Home() {
   const [items, setItems] = useState([
     {
@@ -117,42 +127,70 @@ export default function Home() {
           </h2>
           <img src="/filter.svg" alt="Filter icon" className="w-7" />
         </div>
-        <div>
-          <h4>
-            <b>Category</b>
-          </h4>
-          <div className='mt-4'>
-            <div className="flex items-center">
-              <input type="checkbox" /> <p className="ml-4 text-lg">People</p>
-            </div>
-            <div className="flex items-center">
-              <input type="checkbox" /> <p className="ml-4 text-lg">People</p>
-            </div>
-          </div>
-        </div>
-        {items.map((item) => {
-          return (
+        <div className="lg:flex mt-12">
+          <div className="hidden lg:block w-1.5/5">
+            <h4>
+              <b>Category</b>
+            </h4>
             <div className="mt-4">
-              {item.bestSeller && (
-                <div className="h-8 bg-white w-36 flex justify-center items-center relative top-8 -mt-8">
-                  <p>Best Seller</p>
-                </div>
-              )}
-              <img src={item.image} alt={item.alt} className="h-112 w-full" />
-              <button className="bg-black text-white w-full h-12 text-lg">
-                ADD TO CART
-              </button>
-
-              <div className="flex h-36 justify-around flex-col font-bold">
-                <h4 className="text-gray-600"> {item.label} </h4>
-                <h1 className="text-4xl">
-                  <b>{item.title}</b>
-                </h1>
-                <h2 className="text-gray-500">{`$${item.price}`}</h2>
+              {categories.map((item) => {
+                return (
+                  <div className="flex items-center mt-4">
+                    <input type="checkbox" />
+                    <h4 className="ml-4">{item}</h4>
+                  </div>
+                );
+              })}
+            </div>
+            <hr className='mt-8 w-4/5' />
+            <h4 className="mt-8">
+              <b>Price range</b>
+            </h4>
+            <div className="mt-4">
+              <div className="flex items-center mt-4">
+                <input type="checkbox" />
+                <h4 className="ml-4">Lower than $20</h4>
+              </div>
+              <div className="flex items-center mt-4">
+                <input type="checkbox" />
+                <h4 className="ml-4">$20 - $100</h4>
+              </div>
+              <div className="flex items-center mt-4">
+                <input type="checkbox" />
+                <h4 className="ml-4">$100 - $200</h4>
               </div>
             </div>
-          );
-        })}
+          </div>
+          <div className="sm:grid sm:grid-cols-2 xl:grid-cols-3 gap-20">
+            {items.map((item) => {
+              return (
+                <div className="s:w-80 lg:w-72">
+                  {item.bestSeller && (
+                    <div className="h-8 bg-white w-36 flex justify-center items-center relative top-8 -mt-8">
+                      <p>Best Seller</p>
+                    </div>
+                  )}
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    className="h-96 w-full"
+                  />
+                  <button className="bg-black text-white w-full h-12 text-lg">
+                    ADD TO CART
+                  </button>
+
+                  <div className="flex h-36 justify-around flex-col font-bold">
+                    <h4 className="text-gray-600"> {item.label} </h4>
+                    <h1 className="text-4xl">
+                      <b>{item.title}</b>
+                    </h1>
+                    <h2 className="text-gray-500">{`$${item.price}`}</h2>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
