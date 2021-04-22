@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'sans': ['Archivo']
+      },
+      height: {
+        '128': '35rem'
       }
     },
   },

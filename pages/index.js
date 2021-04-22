@@ -3,20 +3,21 @@ import Header from "../components/Header";
 
 export default function Home() {
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <Header />
       <div className="mx-auto px-4 my-4 border-b-4 border-solid border-gray-300">
         <b>
           <h1 className="text-3xl"> Samurai King Resting </h1>
         </b>
-        <div className="my-4">
+        <div className="mt-4">
           <img
             src="https://images.pexels.com/photos/144234/bull-landscape-nature-mammal-144234.jpeg?cs=srgb&dl=pexels-pixabay-144234.jpg&fm=jpg"
             alt="bull"
             width="100%"
-            className="h-52"
+            className="h-52 sm:h-128"
+            height='35rem'
           />
-          <div className="h-12 bg-white w-44 flex justify-center items-center relative bottom-12">
+          <div className="h-12 bg-gray-200 w-44 flex justify-center items-center relative bottom-12">
             <p> Photo of the day </p>
           </div>
         </div>
