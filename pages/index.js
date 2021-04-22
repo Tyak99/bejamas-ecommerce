@@ -1,14 +1,44 @@
 import Head from "next/head";
+import { useState } from "react";
 import Header from "../components/Header";
 
 export default function Home() {
+  const [items, setItems] = useState([
+    {
+      image:
+        "https://images.pexels.com/photos/3094218/pexels-photo-3094218.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      alt: "woman painting",
+      bestSeller: true,
+      label: "People",
+      title: "Red Bench",
+      price: "3.89",
+    },
+    {
+      image:
+        "https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      alt: "food",
+      bestSeller: false,
+      label: "Food",
+      title: "Egg Balloon",
+      price: "3.89",
+    },
+    {
+      image:
+        "https://images.pexels.com/photos/3147528/pexels-photo-3147528.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      alt: "woman painting",
+      bestSeller: false,
+      label: "People",
+      title: "Man",
+      price: "3.89",
+    },
+  ]);
   return (
     <div className="container mx-auto">
       <Header />
-      <div className="mx-auto px-4 my-4 border-b-4 border-solid border-gray-300">
+      <div className="px-4 my-4 border-b-4 border-solid border-gray-300">
         <div className="flex justify-between items-center">
           <b>
-            <h1 className="text-3xl"> Samurai King Resting </h1>
+            <h2> Samurai King Resting </h2>
           </b>
           <div>
             <button className="hidden sm:block bg-black text-white h-12 text-lg w-44">
@@ -35,10 +65,10 @@ export default function Home() {
           </button>
         </div>
 
-        <div className='md:grid grid-cols-2 gap-16'>
+        <div className="md:grid grid-cols-2 gap-16">
           <div className="my-4">
             <b>
-              <h4 className="text-lg"> About the Samurai King Resting </h4>
+              <h4> About the Samurai King Resting </h4>
             </b>
             <p className="my-6">
               So how did the classical Latin become so incoherent? According to
@@ -48,9 +78,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className='md:flex flex-col items-end'>
+          <div className="md:flex flex-col items-end">
             <b>
-              <h4 className="text-lg md:text-right"> People also buy </h4>
+              <h4 className="md:text-right"> People also buy </h4>
             </b>
             <div className="grid grid-cols-3 gap-4 my-6 max-w-sm">
               <img
@@ -70,7 +100,7 @@ export default function Home() {
               />
             </div>
 
-            <h4 className="text-lg md:text-right">
+            <h4 className="md:text-right">
               <b> Details </b>
             </h4>
             <div className="my-6 md:text-right">
@@ -79,6 +109,50 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="px-4 my-4">
+        <div className="flex justify-between items-center">
+          <h2>
+            <b> Photography /</b> Premium Photos
+          </h2>
+          <img src="/filter.svg" alt="Filter icon" className="w-7" />
+        </div>
+        <div>
+          <h4>
+            <b>Category</b>
+          </h4>
+          <div className='mt-4'>
+            <div className="flex items-center">
+              <input type="checkbox" /> <p className="ml-4 text-lg">People</p>
+            </div>
+            <div className="flex items-center">
+              <input type="checkbox" /> <p className="ml-4 text-lg">People</p>
+            </div>
+          </div>
+        </div>
+        {items.map((item) => {
+          return (
+            <div className="mt-4">
+              {item.bestSeller && (
+                <div className="h-8 bg-white w-36 flex justify-center items-center relative top-8 -mt-8">
+                  <p>Best Seller</p>
+                </div>
+              )}
+              <img src={item.image} alt={item.alt} className="h-112 w-full" />
+              <button className="bg-black text-white w-full h-12 text-lg">
+                ADD TO CART
+              </button>
+
+              <div className="flex h-36 justify-around flex-col font-bold">
+                <h4 className="text-gray-600"> {item.label} </h4>
+                <h1 className="text-4xl">
+                  <b>{item.title}</b>
+                </h1>
+                <h2 className="text-gray-500">{`$${item.price}`}</h2>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -11,3 +11,20 @@
     src: url(/fonts/Archivo/Archivo-Regular.ttf) format("woff");
   }
 }
+
+@layer base {
+  h4 {
+    @apply text-lg;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  @screen md {
+    h4 {
+      @apply text-2xl
+    }
+    h1 {
+      @apply text-3xl
+    }
+  }
+}

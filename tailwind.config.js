@@ -7,6 +7,7 @@ module.exports = {
         'sans': ['Archivo']
       },
       height: {
+        '112': '28rem',
         '128': '35rem'
       }
     },
