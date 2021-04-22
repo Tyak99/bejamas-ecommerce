@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="container">
       <Header />
-      <div className="mx-auto px-4 my-4">
+      <div className="mx-auto px-4 my-4 border-b-4 border-solid border-gray-300">
         <b>
           <h1 className="text-3xl"> Samurai King Resting </h1>
         </b>
