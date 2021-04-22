@@ -125,7 +125,11 @@ export default function Home() {
           <h2>
             <b> Photography /</b> Premium Photos
           </h2>
-          <img src="/filter.svg" alt="Filter icon" className="w-7" />
+          <div className="hidden lg:flex justify-between w-32">
+            <p className="text-xl"> Sort By </p>
+            <p className="text-xl"> Price </p>
+          </div>
+          <img src="/filter.svg" alt="Filter icon" className="w-7 lg:hidden" />
         </div>
         <div className="lg:flex mt-12">
           <div className="hidden lg:block w-1.5/5">
@@ -142,7 +146,7 @@ export default function Home() {
                 );
               })}
             </div>
-            <hr className='mt-8 w-4/5' />
+            <hr className="mt-8 w-4/5" />
             <h4 className="mt-8">
               <b>Price range</b>
             </h4>
