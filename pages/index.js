@@ -42,6 +42,23 @@ export default function Home() {
         <div>
           <b>
             <h4 className="text-lg"> People also buy </h4>
+            <div className="flex justify-between my-6">
+              <img
+                src="https://images.pexels.com/photos/916337/pexels-photo-916337.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                alt="room"
+                className="w-24 h-32"
+              />
+              <img
+                src="https://images.pexels.com/photos/1020016/pexels-photo-1020016.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+                alt="nature"
+                className="w-24 h-32"
+              />
+              <img
+                src="https://images.pexels.com/photos/3246665/pexels-photo-3246665.png?auto=compress&cs=tinysrgb&h=750&w=1260"
+                alt="art"
+                className="w-24 h-32"
+              />
+            </div>
           </b>
         </div>
 
@@ -49,6 +66,10 @@ export default function Home() {
           <h4 className="text-lg">
             <b> Details </b>
           </h4>
+          <div className='my-6'>
+            <p className='text-xl font-light'>Size: 15mb</p>
+            <p className='text-xl font-light'>Size: 1202 x 1020 pixel</p>
+          </div>
         </div>
       </div>
     </div>
