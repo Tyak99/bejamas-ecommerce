@@ -86,18 +86,7 @@ const products = [
 export default function Home() {
   const [cartItems, setCartItems] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState(null);
-
-  const saveItemToCart = (item) => {
-    const check = cartItems.findIndex((value) => {
-      return value.id === item.id;
-    });
-    if (check === -1) {
-      const updatedCart = [...cartItems, item];
-      setCartItems(updatedCart);
-    } else {
-      console.log("Item already exist in the cart");
-    }
-  };
+  const [openCartModal, setOpenCartModal] = useState(false);
 
   useEffect(() => {
     const featured = products.find((item) => {
@@ -106,9 +95,32 @@ export default function Home() {
     setFeaturedProduct(featured);
   }, [products]);
 
+  const saveItemToCart = (item) => {
+    const check = cartItems.findIndex((value) => {
+      return value.id === item.id;
+    });
+    if (check === -1) {
+      const updatedCart = [...cartItems, item];
+      setCartItems(updatedCart);
+      setOpenCartModal(true);
+    } else {
+      console.log("Item already exist in the cart");
+    }
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setOpenCartModal(false);
+  };
+
   return (
     <div className="container mx-auto">
-      <Header cart={cartItems} />
+      <Header
+        cart={cartItems}
+        openCartModal={openCartModal}
+        setOpenCartModal={setOpenCartModal}
+        clearCart={clearCart}
+      />
       {featuredProduct && (
         <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
       )}
