@@ -1,9 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import Featured from "../containers/Featured";
-import Filter from "../containers/Filter";
 import Header from "../components/Header";
 import Items from "../containers/Items";
+import MobileFilter from "../containers/Filter/MobileFilter";
+import WebFilter from "../containers/Filter/WebFilter";
 
 const firebaseFeatureProduct = {
   id: "27389709875689283",
@@ -137,6 +138,7 @@ export default function Home() {
   const [openCartModal, setOpenCartModal] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
 
   const getProducts = () => {
     if (selectedCategories.length < 1) {
@@ -155,6 +157,15 @@ export default function Home() {
   useEffect(() => {
     setFeaturedProduct(firebaseFeatureProduct);
   }, []);
+
+  // Use this to stop page scrolling when modal is open
+  useEffect(() => {
+    if (openMobileCategoryModal === true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [openMobileCategoryModal]);
 
   const saveItemToCart = (item) => {
     const check = cartItems.findIndex((value) => {
@@ -200,22 +211,34 @@ export default function Home() {
       {featuredProduct && (
         <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
       )}
-      <div>
+      <div className='px-4 my-4'>
         <div className="flex justify-between items-center">
-          <h2>
+          <h4>
             <b> Photography /</b> Premium Photos
-          </h2>
+          </h4>
           <div className="hidden lg:flex justify-between w-32">
             <p className="text-xl"> Sort By </p>
             <p className="text-xl"> Price </p>
           </div>
-          <img src="/filter.svg" alt="Filter icon" className="w-7 lg:hidden" />
+          <img
+            src="/filter.svg"
+            alt="Filter icon"
+            className="w-7 lg:hidden"
+            onClick={() => setOpenMobileCategoryModal(true)}
+          />
         </div>
         <div className="lg:flex mt-12">
-          <Filter categories={categories} handleFilter={handleFilter} />
+          <WebFilter categories={categories} handleFilter={handleFilter} />
           <Items saveItemToCart={saveItemToCart} products={products} />
         </div>
       </div>
+      {openMobileCategoryModal && (
+        <MobileFilter
+          categories={categories}
+          handleFilter={handleFilter}
+          closeModal={() => setOpenMobileCategoryModal(false)}
+        />
+      )}
     </div>
   );
 }

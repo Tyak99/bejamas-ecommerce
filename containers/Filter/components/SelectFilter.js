@@ -1,6 +1,6 @@
-const Filter = ({ categories, handleFilter }) => {
+const SelectFilter = ({ categories, handleFilter }) => {
   return (
-    <div className="hidden lg:block w-1.5/5">
+    <>
       <h4>
         <b>Category</b>
       </h4>
@@ -37,8 +37,8 @@ const Filter = ({ categories, handleFilter }) => {
           <h4 className="ml-4">$100 - $200</h4>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Filter;
+export default SelectFilter;
