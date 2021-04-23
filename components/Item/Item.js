@@ -1,13 +1,13 @@
 const Item = ({ item }) => {
   return (
-    <div className="s:w-80 lg:w-72">
+    <div className="group s:w-80 lg:w-72">
       {item.bestSeller && (
         <div className="h-8 bg-white w-36 flex justify-center items-center relative top-8 -mt-8">
           <p>Best Seller</p>
         </div>
       )}
-      <img src={item.image} alt={item.alt} className="h-96 w-full" />
-      <button className="bg-black text-white w-full h-12 text-lg">
+      <img src={item.image} alt={item.alt} className="h-112 w-full" />
+      <button className="hidden group-hover:block bg-black text-white w-full h-12 text-lg relative bottom-12 -mb-12">
         ADD TO CART
       </button>
 
