@@ -1,6 +1,6 @@
 const Featured = ({ product, saveItemToCart }) => {
   return (
-    <div className="px-4 my-4 border-b-4 border-solid border-gray-300">
+    <div className="px-4 my-4 border-b-4 border-solid border-gray-400">
       <div className="flex justify-between items-center">
         <b>
           <h2> {product.name} </h2>

@@ -130,6 +130,19 @@ const categories = [
   "Landmarks",
   "Cities",
   "Nature",
+  'Fres',
+  'Muse',
+  'Stool',
+  'Justck',
+  "Premium",
+  "Pets",
+  "Food",
+  "Landmarks",
+  "Cities",
+  "Nature",
+  'Fres',
+  'Muse',
+  'Stool',
 ];
 
 export default function Home() {
@@ -161,9 +174,11 @@ export default function Home() {
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
-      document.body.style.overflow = "hidden";
+      // document.body.style.overflow = "hidden";
+      document.body.setAttribute('style', 'overflow: hidden; background-color: gray')
     } else {
-      document.body.style.overflow = "auto";
+      // document.body.style.overflow = "auto";
+      document.body.setAttribute('style', 'overflow: auto; background-color: white')
     }
   }, [openMobileCategoryModal]);
 
