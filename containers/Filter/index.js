@@ -1,14 +1,4 @@
-const categories = [
-  "People",
-  "Premium",
-  "Pets",
-  "Food",
-  "Landmarks",
-  "Cities",
-  "Nature",
-];
-
-const Filter = () => {
+const Filter = ({ categories, handleFilter }) => {
   return (
     <div className="hidden lg:block w-1.5/5">
       <h4>
@@ -18,7 +8,12 @@ const Filter = () => {
         {categories.map((item) => {
           return (
             <div className="flex items-center mt-4" key={item}>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                value={item}
+                name={item.toLowerCase()}
+                onChange={(e) => handleFilter(e)}
+              />
               <h4 className="ml-4">{item}</h4>
             </div>
           );
