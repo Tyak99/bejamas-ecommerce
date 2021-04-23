@@ -1,4 +1,3 @@
-
 const categories = [
   "People",
   "Premium",
@@ -18,7 +17,7 @@ const Filter = () => {
       <div className="mt-4">
         {categories.map((item) => {
           return (
-            <div className="flex items-center mt-4">
+            <div className="flex items-center mt-4" key={item}>
               <input type="checkbox" />
               <h4 className="ml-4">{item}</h4>
             </div>
