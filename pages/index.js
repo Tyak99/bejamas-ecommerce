@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Items from "../containers/Items";
 import MobileFilter from "../containers/Filter/MobileFilter";
 import WebFilter from "../containers/Filter/WebFilter";
+import SelectSort from "../components/Select";
 
 const firebaseFeatureProduct = {
   id: "27389709875689283",
@@ -130,19 +131,10 @@ const categories = [
   "Landmarks",
   "Cities",
   "Nature",
-  'Fres',
-  'Muse',
-  'Stool',
-  'Justck',
-  "Premium",
-  "Pets",
-  "Food",
-  "Landmarks",
-  "Cities",
-  "Nature",
-  'Fres',
-  'Muse',
-  'Stool',
+  "Fres",
+  "Muse",
+  "Stool",
+  "Justck",
 ];
 
 export default function Home() {
@@ -174,11 +166,15 @@ export default function Home() {
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
-      // document.body.style.overflow = "hidden";
-      document.body.setAttribute('style', 'overflow: hidden; background-color: gray')
+      document.body.setAttribute(
+        "style",
+        "overflow: hidden; background-color: gray"
+      );
     } else {
-      // document.body.style.overflow = "auto";
-      document.body.setAttribute('style', 'overflow: auto; background-color: white')
+      document.body.setAttribute(
+        "style",
+        "overflow: auto; background-color: white"
+      );
     }
   }, [openMobileCategoryModal]);
 
@@ -215,6 +211,28 @@ export default function Home() {
     setSelectedCategories(updatedSelectedCategories);
   };
 
+  const handleSorting = (sortBy) => {
+    if (sortBy === "alphabetically") {
+      const sortedProducts = [...products].sort((a, b) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      setProducts(sortedProducts);
+    } else if (sortBy === "price") {
+      const sortedProducts = [...products].sort((a, b) => {
+        return a.price - b.price;
+      });
+      setProducts(sortedProducts);
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <Header
@@ -226,15 +244,12 @@ export default function Home() {
       {featuredProduct && (
         <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
       )}
-      <div className='px-4 my-4'>
+      <div className="px-4 my-4">
         <div className="flex justify-between items-center">
           <h4>
             <b> Photography /</b> Premium Photos
           </h4>
-          <div className="hidden lg:flex justify-between w-32">
-            <p className="text-xl"> Sort By </p>
-            <p className="text-xl"> Price </p>
-          </div>
+          <SelectSort handleSorting={handleSorting} />
           <img
             src="/filter.svg"
             alt="Filter icon"
