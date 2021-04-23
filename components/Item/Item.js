@@ -8,7 +8,7 @@ const Item = ({ item, sendToCart }) => {
       )}
       <img src={item.image.src} alt={item.image.alt} className="h-112 w-full" />
       <button
-        className="hidden group-hover:block bg-black text-white w-full h-12 text-lg relative bottom-12 -mb-12"
+        className="sm:hidden group-hover:block bg-black text-white w-full h-12 text-lg relative bottom-12 -mb-12"
         onClick={() => sendToCart(item)}
       >
         ADD TO CART
