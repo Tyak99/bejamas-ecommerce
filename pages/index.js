@@ -144,6 +144,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
+  const [sortBy, setSortBy] = useState(null);
 
   const getProducts = () => {
     if (selectedCategories.length < 1) {
@@ -156,7 +157,12 @@ export default function Home() {
 
   useEffect(() => {
     const response = getProducts();
-    setProducts(response);
+    if (sortBy) {
+      const sortedProducts = handleSorting(response);
+      setProducts(sortedProducts);
+    } else {
+      setProducts(response);
+    }
   }, [selectedCategories]);
 
   useEffect(() => {
@@ -211,7 +217,7 @@ export default function Home() {
     setSelectedCategories(updatedSelectedCategories);
   };
 
-  const handleSorting = (sortBy) => {
+  const handleSorting = (products) => {
     if (sortBy === "alphabetically") {
       const sortedProducts = [...products].sort((a, b) => {
         const nameA = a.name.toLowerCase();
@@ -224,14 +230,21 @@ export default function Home() {
         }
         return 0;
       });
-      setProducts(sortedProducts);
+      return sortedProducts;
     } else if (sortBy === "price") {
       const sortedProducts = [...products].sort((a, b) => {
         return a.price - b.price;
       });
-      setProducts(sortedProducts);
+      return sortedProducts;
     }
+    return products;
   };
+
+  useEffect(() => {
+    if (!sortBy) return;
+    const sortedProducts = handleSorting(products);
+    setProducts(sortedProducts);
+  }, [sortBy]);
 
   return (
     <div className="container mx-auto">
@@ -249,7 +262,7 @@ export default function Home() {
           <h4>
             <b> Photography /</b> Premium Photos
           </h4>
-          <SelectSort handleSorting={handleSorting} />
+          <SelectSort setSortBy={setSortBy} />
           <img
             src="/filter.svg"
             alt="Filter icon"
