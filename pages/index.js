@@ -294,7 +294,7 @@ export default function Home() {
   }, [sortBy, sortByOrder]);
 
   return (
-    <div className="container mx-auto">
+    <div className="mx-auto px-8">
       <Header
         cart={cartItems}
         openCartModal={openCartModal}
@@ -337,7 +337,6 @@ export default function Home() {
   );
 }
 
-// . Clicking on arrows should change the order to 'ascending' or 'descending'.
 // TODO: Fix the cart on mobile, move data to firebase and query from there
 // when user changes category, query backend
 // make all micro ui adjustments including geting svg for header name
