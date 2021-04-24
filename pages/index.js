@@ -121,6 +121,43 @@ const firebaseProducts = [
       ],
     },
   },
+  {
+    id: "asf3443423",
+    name: "Graphy Queen",
+    category: "People",
+    price: 68.2,
+    currency: "USD",
+    image: {
+      src:
+        "https://images.pexels.com/photos/3863802/pexels-photo-3863802.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      alt: "bull",
+    },
+    bestseller: false,
+    featured: true,
+    details: {
+      dimensions: {
+        width: 1020,
+        height: 1020,
+      },
+      size: 15000,
+      description:
+        "So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scram",
+      recommendations: [
+        {
+          src: "",
+          alt: "",
+        },
+        {
+          src: "",
+          alt: "",
+        },
+        {
+          src: "",
+          alt: "",
+        },
+      ],
+    },
+  },
 ];
 
 const categories = [
@@ -145,6 +182,7 @@ export default function Home() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [sortBy, setSortBy] = useState(null);
+  const [sortByOrder, setSortByOrder] = useState("desc");
 
   const getProducts = () => {
     if (selectedCategories.length < 1) {
@@ -217,25 +255,34 @@ export default function Home() {
     setSelectedCategories(updatedSelectedCategories);
   };
 
+  const handlePriceSorting = (products) => {
+    const sortedProducts = [...products].sort((a, b) => {
+      return sortByOrder === "desc" ? a.price - b.price : b.price - a.price;
+    });
+    return sortedProducts;
+  };
+
+  const handleAlphabeticalSorting = (products) => {
+    const sortedProducts = [...products].sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      if (nameA < nameB) {
+        return sortByOrder === "desc" ? -1 : 1;
+      }
+      if (nameA > nameB) {
+        return sortByOrder === "desc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    return sortedProducts;
+  };
+
   const handleSorting = (products) => {
     if (sortBy === "alphabetically") {
-      const sortedProducts = [...products].sort((a, b) => {
-        const nameA = a.name.toLowerCase();
-        const nameB = b.name.toLowerCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      });
-      return sortedProducts;
+      return handleAlphabeticalSorting(products);
     } else if (sortBy === "price") {
-      const sortedProducts = [...products].sort((a, b) => {
-        return a.price - b.price;
-      });
-      return sortedProducts;
+      return handlePriceSorting(products);
     }
     return products;
   };
@@ -244,7 +291,7 @@ export default function Home() {
     if (!sortBy) return;
     const sortedProducts = handleSorting(products);
     setProducts(sortedProducts);
-  }, [sortBy]);
+  }, [sortBy, sortByOrder]);
 
   return (
     <div className="container mx-auto">
@@ -262,7 +309,11 @@ export default function Home() {
           <h4>
             <b> Photography /</b> Premium Photos
           </h4>
-          <SelectSort setSortBy={setSortBy} />
+          <SelectSort
+            setSortBy={setSortBy}
+            sortByOrder={sortByOrder}
+            setSortByOrder={setSortByOrder}
+          />
           <img
             src="/filter.svg"
             alt="Filter icon"
@@ -285,3 +336,9 @@ export default function Home() {
     </div>
   );
 }
+
+// . Clicking on arrows should change the order to 'ascending' or 'descending'.
+// TODO: Fix the cart on mobile, move data to firebase and query from there
+// when user changes category, query backend
+// make all micro ui adjustments including geting svg for header name
+// build in prod and test lighthouse score
