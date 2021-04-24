@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 let Featured = ({ product, saveItemToCart }) => {
   if (!product) return null;
@@ -19,12 +20,13 @@ let Featured = ({ product, saveItemToCart }) => {
         </div>
       </div>
       <div className="mt-4">
-        <img
+        <Image
           src={product.image.src}
           alt={product.image.alt}
-          width="100%"
-          className="h-52 sm:h-112 lg:h-168"
-          height="35rem"
+          layout="responsive"
+          width={1200}
+          height={600}
+          priority
         />
         <div className="h-12 bg-gray-200 w-44 flex justify-center items-center relative bottom-12 -mb-8">
           <p> Photo of the day </p>

@@ -188,3 +188,7 @@ export default function Home() {
 }
 
 // implement pagination
+// move category to backend
+// show empy in cart and items when they are empty
+// fix filter modal on mobile
+// add the two mobile filter buttons and implement them
