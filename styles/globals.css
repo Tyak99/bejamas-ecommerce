@@ -9,6 +9,7 @@
     font-family: Archivo;
     font-weight: 400;
     src: url(/fonts/Archivo/Archivo-Regular.ttf) format("woff");
+    font-display: swap;
   }
 }
 

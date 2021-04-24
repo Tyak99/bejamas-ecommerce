@@ -1,3 +1,3 @@
-const firebaseUrl = "https://bejamas-43a59-default-rtdb.firebaseio.com";
+const firebaseUrl = "https://bejamas2-fadb0-default-rtdb.europe-west1.firebasedatabase.app";
 
 export { firebaseUrl };

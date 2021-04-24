@@ -6,7 +6,7 @@ const Item = ({ item, sendToCart }) => {
           <p>Best Seller</p>
         </div>
       )}
-      <img src={item.image.src} alt={item.image.alt} className="h-112 w-full" />
+      <img src={item.image.src} alt={item.image.alt} width='100%' height='28rem' className="h-112" />
       <button
         className="sm:hidden group-hover:block bg-black text-white w-full h-12 text-lg block relative bottom-12 -mb-12"
         onClick={() => sendToCart(item)}

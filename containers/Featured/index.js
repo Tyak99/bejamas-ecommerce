@@ -54,17 +54,17 @@ let Featured = ({ product, saveItemToCart }) => {
           </b>
           <div className="grid grid-cols-3 gap-4 my-6 max-w-sm">
             <img
-              src="https://images.pexels.com/photos/916337/pexels-photo-916337.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+              src="https://images.pexels.com/photos/916337/pexels-photo-916337.jpeg?auto=compress&cs=tinysrgb&h=120&w=150"
               alt="room"
               className="w-32 h-36"
             />
             <img
-              src="https://images.pexels.com/photos/1020016/pexels-photo-1020016.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+              src="https://images.pexels.com/photos/1020016/pexels-photo-1020016.jpeg?auto=compress&cs=tinysrgb&h=120&w=150"
               alt="nature"
               className="w-32 h-36"
             />
             <img
-              src="https://images.pexels.com/photos/3246665/pexels-photo-3246665.png?auto=compress&cs=tinysrgb&h=750&w=1260"
+              src="https://images.pexels.com/photos/3246665/pexels-photo-3246665.png?auto=compress&cs=tinysrgb&h=120&w=150"
               alt="art"
               className="w-32 h-36"
             />

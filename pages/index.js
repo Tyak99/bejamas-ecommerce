@@ -42,6 +42,13 @@ export default function Home() {
   };
 
   useEffect(() => {
+    axios.get(`${firebaseUrl}/featured-products.json`).then((res) => {
+      const data = Object.values(res.data);
+      setFeaturedProduct(data[0]);
+    });
+  }, []);
+
+  useEffect(() => {
     getProducts().then((data) => {
       if (sortBy) {
         const sortedProducts = handleSorting(data);
@@ -51,13 +58,6 @@ export default function Home() {
       }
     });
   }, [selectedCategories]);
-
-  useEffect(() => {
-    axios.get(`${firebaseUrl}/featured-products.json`).then((res) => {
-      const data = Object.values(res.data);
-      setFeaturedProduct(data[0]);
-    });
-  }, []);
 
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
