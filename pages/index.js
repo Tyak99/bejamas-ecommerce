@@ -6,205 +6,57 @@ import Items from "../containers/Items";
 import MobileFilter from "../containers/Filter/MobileFilter";
 import WebFilter from "../containers/Filter/WebFilter";
 import SelectSort from "../components/Select";
-
-const firebaseFeatureProduct = {
-  id: "27389709875689283",
-  name: "Samurai King Restling",
-  category: "Landmarks",
-  price: 101,
-  currency: "USD",
-  image: {
-    src:
-      "https://images.pexels.com/photos/144234/bull-landscape-nature-mammal-144234.jpeg?cs=srgb&dl=pexels-pixabay-144234.jpg&fm=jpg",
-    alt: "bull",
-  },
-  bestseller: false,
-  featured: true,
-  details: {
-    dimensions: {
-      width: 1020,
-      height: 1020,
-    },
-    size: 15000,
-    description:
-      "So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scram",
-    recommendations: [
-      {
-        src: "",
-        alt: "",
-      },
-      {
-        src: "",
-        alt: "",
-      },
-      {
-        src: "",
-        alt: "",
-      },
-    ],
-  },
-};
-
-const firebaseProducts = [
-  {
-    id: "27389709875689283",
-    name: "Samurai King Restling",
-    category: "Landmarks",
-    price: 101,
-    currency: "USD",
-    image: {
-      src:
-        "https://images.pexels.com/photos/144234/bull-landscape-nature-mammal-144234.jpeg?cs=srgb&dl=pexels-pixabay-144234.jpg&fm=jpg",
-      alt: "bull",
-    },
-    bestseller: false,
-    featured: true,
-    details: {
-      dimensions: {
-        width: 1020,
-        height: 1020,
-      },
-      size: 15000,
-      description:
-        "So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scram",
-      recommendations: [
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-      ],
-    },
-  },
-
-  {
-    id: "273897283",
-    name: "Fine Man",
-    category: "People",
-    price: 35.68,
-    currency: "USD",
-    image: {
-      src:
-        "https://images.pexels.com/photos/3147528/pexels-photo-3147528.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-      alt: "bull",
-    },
-    bestseller: false,
-    featured: false,
-    details: {
-      dimensions: {
-        width: 1020,
-        height: 1020,
-      },
-      size: 15000,
-      description:
-        "So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scram",
-      recommendations: [
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-      ],
-    },
-  },
-  {
-    id: "asf3443423",
-    name: "Graphy Queen",
-    category: "People",
-    price: 68.2,
-    currency: "USD",
-    image: {
-      src:
-        "https://images.pexels.com/photos/3863802/pexels-photo-3863802.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-      alt: "bull",
-    },
-    bestseller: false,
-    featured: true,
-    details: {
-      dimensions: {
-        width: 1020,
-        height: 1020,
-      },
-      size: 15000,
-      description:
-        "So how did the classical Latin become so incoherent? According to McClintock, a 15th century typesetter likely scram",
-      recommendations: [
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-        {
-          src: "",
-          alt: "",
-        },
-      ],
-    },
-  },
-];
+import axios from "axios";
+import { firebaseUrl } from "../variables";
 
 const categories = [
   "People",
-  "Premium",
-  "Pets",
+  "Nature",
+  "Animals",
   "Food",
   "Landmarks",
-  "Cities",
-  "Nature",
-  "Fres",
-  "Muse",
-  "Stool",
-  "Justck",
+  "Cosmetics",
+  "Electronics",
 ];
 
 export default function Home() {
-  const [cartItems, setCartItems] = useState([]);
-  const [featuredProduct, setFeaturedProduct] = useState(null);
-  const [openCartModal, setOpenCartModal] = useState(false);
   const [products, setProducts] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
+  const [featuredProduct, setFeaturedProduct] = useState(null);
   const [sortBy, setSortBy] = useState(null);
   const [sortByOrder, setSortByOrder] = useState("desc");
+  const [cartItems, setCartItems] = useState([]);
+  const [openCartModal, setOpenCartModal] = useState(false);
+  const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const getProducts = () => {
-    if (selectedCategories.length < 1) {
-      return firebaseProducts;
-    }
-    return firebaseProducts.filter((item) => {
-      return selectedCategories.includes(item.category.toLowerCase());
+    return axios.get(`${firebaseUrl}/products.json`).then((res) => {
+      const data = Object.values(res.data);
+      if (selectedCategories.length < 1) {
+        return data;
+      }
+      return data.filter((item) => {
+        return selectedCategories.includes(item.category.toLowerCase());
+      });
     });
   };
 
   useEffect(() => {
-    const response = getProducts();
-    if (sortBy) {
-      const sortedProducts = handleSorting(response);
-      setProducts(sortedProducts);
-    } else {
-      setProducts(response);
-    }
+    getProducts().then((data) => {
+      if (sortBy) {
+        const sortedProducts = handleSorting(data);
+        setProducts(sortedProducts);
+      } else {
+        setProducts(data);
+      }
+    });
   }, [selectedCategories]);
 
   useEffect(() => {
-    setFeaturedProduct(firebaseFeatureProduct);
+    axios.get(`${firebaseUrl}/featured-products.json`).then((res) => {
+      const data = Object.values(res.data);
+      setFeaturedProduct(data[0]);
+    });
   }, []);
 
   // Use this to stop page scrolling when modal is open
@@ -301,9 +153,7 @@ export default function Home() {
         setOpenCartModal={setOpenCartModal}
         clearCart={clearCart}
       />
-      {featuredProduct && (
-        <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
-      )}
+      <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
       <div className="px-4 my-4">
         <div className="flex justify-between items-center">
           <h4>

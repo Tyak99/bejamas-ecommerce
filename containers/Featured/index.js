@@ -1,4 +1,8 @@
-const Featured = ({ product, saveItemToCart }) => {
+import React from "react";
+
+let Featured = ({ product, saveItemToCart }) => {
+  if (!product) return null;
+
   return (
     <div className="px-4 my-4 border-b-4 border-solid border-gray-400">
       <div className="flex justify-between items-center">
@@ -19,7 +23,7 @@ const Featured = ({ product, saveItemToCart }) => {
           src={product.image.src}
           alt={product.image.alt}
           width="100%"
-          className="h-52 sm:h-128"
+          className="h-52 sm:h-112 lg:h-168"
           height="35rem"
         />
         <div className="h-12 bg-gray-200 w-44 flex justify-center items-center relative bottom-12 -mb-8">
@@ -78,5 +82,7 @@ const Featured = ({ product, saveItemToCart }) => {
     </div>
   );
 };
+
+Featured = React.memo(Featured);
 
 export default Featured;
