@@ -187,7 +187,4 @@ export default function Home() {
   );
 }
 
-// TODO: Fix the cart on mobile, move data to firebase and query from there
-// when user changes category, query backend
-// make all micro ui adjustments including geting svg for header name
-// build in prod and test lighthouse score
+// implement pagination
