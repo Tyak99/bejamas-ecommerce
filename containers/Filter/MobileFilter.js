@@ -10,8 +10,8 @@ const MobileFilter = ({
   priceRange
 }) => {
   return (
-    <div className="fixed top-0 w-screen h-screen flex items-end flex-end">
-      <div className="h-5/6 bg-white w-screen p-4 pb-24 -ml-8">
+    <div className="fixed inset-0 bg-gray-200 bg-opacity-70 z-50 flex items-end flex-end">
+      <div className="h-5/6 bg-white w-screen p-4 pb-24 w-screen">
         <div className="overflow-scroll h-full">
           <div className="flex items-center mb-4">
             <h2>

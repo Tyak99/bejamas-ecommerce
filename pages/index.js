@@ -8,7 +8,7 @@ import WebFilter from "../containers/Filter/WebFilter";
 import SelectSort from "../components/Select";
 import axios from "axios";
 import { firebaseUrl } from "../variables";
-
+import SelectFilter from "../containers/Filter/components/SelectFilter";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -21,14 +21,13 @@ export default function Home() {
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState({ selected: false, value: '' });
-  
+  const [priceRange, setPriceRange] = useState({ selected: false, value: "" });
 
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
       const data = Object.values(res.data);
       setProducts(data);
-      setDisplayedProducts(data)
+      setDisplayedProducts(data);
     });
   };
 
@@ -53,7 +52,7 @@ export default function Home() {
     const filteredProducts = data.filter((item) => {
       let result;
       if (!selectedCategories.length < 1) {
-        result = selectedCategories.includes(item.category.toLowerCase())
+        result = selectedCategories.includes(item.category.toLowerCase());
         if (!result) return result;
       }
       if (priceRange.selected && priceRange.value) {
@@ -69,15 +68,9 @@ export default function Home() {
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
-      document.body.setAttribute(
-        "style",
-        "overflow: hidden; background-color: gray"
-      );
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.setAttribute(
-        "style",
-        "overflow: auto; background-color: white"
-      );
+      document.body.style.overflow = 'auto'
     }
   }, [openMobileCategoryModal]);
 

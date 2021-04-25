@@ -14,6 +14,9 @@
 }
 
 @layer base {
+  ::-webkit-scrollbar {
+    display: none;
+  }
   h4 {
     @apply text-lg;
   }
