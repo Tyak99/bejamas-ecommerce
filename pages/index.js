@@ -21,7 +21,10 @@ export default function Home() {
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState({ selected: false });
+  const [priceRange, setPriceRange] = useState([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState({
+    selected: false,
+  });
 
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
@@ -41,11 +44,15 @@ export default function Home() {
       setCategories(data);
     });
     getProducts();
+    axios.get(`${firebaseUrl}/filter.json`).then((res) => {
+      const data = Object.values(res.data["price-range"]);
+      setPriceRange(data);
+    });
   }, []);
 
   useEffect(() => {
     const data = [...products];
-    if (selectedCategories.length < 1 && !priceRange.value) {
+    if (selectedCategories.length < 1 && !selectedPriceRange.value) {
       setDisplayedProducts(data);
       return;
     }
@@ -55,8 +62,8 @@ export default function Home() {
         result = selectedCategories.includes(item.category.toLowerCase());
         if (!result) return result;
       }
-      if (priceRange.value) {
-        const priceRangeValue = priceRange.value;
+      if (selectedPriceRange.value) {
+        const priceRangeValue = selectedPriceRange.value;
         if (priceRangeValue.lowerBoundary && !priceRangeValue.higherBoundary) {
           result = item.price < priceRangeValue.lowerBoundary;
         } else if (
@@ -74,7 +81,7 @@ export default function Home() {
     });
 
     setDisplayedProducts(handleSorting(filteredProducts));
-  }, [selectedCategories, products, priceRange]);
+  }, [selectedCategories, products, selectedPriceRange]);
 
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
@@ -195,6 +202,8 @@ export default function Home() {
             selectedCategories={selectedCategories}
             setPriceRange={setPriceRange}
             priceRange={priceRange}
+            selectedPriceRange={selectedPriceRange}
+            setSelectedPriceRange={setSelectedPriceRange}
           />
           <Items saveItemToCart={saveItemToCart} products={displayedProducts} />
         </div>
@@ -206,8 +215,9 @@ export default function Home() {
           closeModal={() => setOpenMobileCategoryModal(false)}
           clearFilter={clearFilter}
           selectedCategories={selectedCategories}
-          setPriceRange={setPriceRange}
           priceRange={priceRange}
+          selectedPriceRange={selectedPriceRange}
+          setSelectedPriceRange={setSelectedPriceRange}
         />
       )}
     </div>

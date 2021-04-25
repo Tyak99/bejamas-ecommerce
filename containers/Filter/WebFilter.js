@@ -5,8 +5,9 @@ const WebFilter = ({
   categories,
   handleFilter,
   selectedCategories,
-  setPriceRange,
   priceRange,
+  selectedPriceRange,
+  setSelectedPriceRange,
 }) => {
   return (
     <div className="hidden lg:block w-1.5/5">
@@ -14,8 +15,9 @@ const WebFilter = ({
         categories={categories}
         handleFilter={handleFilter}
         selectedCategories={selectedCategories}
-        setPriceRange={setPriceRange}
         priceRange={priceRange}
+        selectedPriceRange={selectedPriceRange}
+        setSelectedPriceRange={setSelectedPriceRange}
       />
     </div>
   );

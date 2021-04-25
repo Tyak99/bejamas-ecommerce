@@ -6,7 +6,8 @@ const MobileFilter = ({
   closeModal,
   clearFilter,
   selectedCategories,
-  setPriceRange,
+  setSelectedPriceRange,
+  selectedPriceRange,
   priceRange
 }) => {
   return (
@@ -31,8 +32,9 @@ const MobileFilter = ({
             categories={categories}
             handleFilter={handleFilter}
             selectedCategories={selectedCategories}
-            setPriceRange={setPriceRange}
+            setSelectedPriceRange={setSelectedPriceRange}
             priceRange={priceRange}
+            selectedPriceRange={selectedPriceRange}
           />
         </div>
         <div className="h-full grid grid-cols-2 gap-4 mt-8">
