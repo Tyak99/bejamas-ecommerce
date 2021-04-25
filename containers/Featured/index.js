@@ -37,8 +37,8 @@ let Featured = ({ product, saveItemToCart }) => {
           src={product.image.src}
           alt={product.image.alt}
           layout="responsive"
-          width={1300}
-          height={500}
+          width={1290}
+          height={533}
           priority
         />
         <div className="h-12 bg-gray-200 w-44 flex justify-center items-center relative bottom-12 -mb-8">
