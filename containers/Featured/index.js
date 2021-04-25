@@ -18,7 +18,7 @@ let Featured = ({ product, saveItemToCart }) => {
     );
 
   return (
-    <div className="px-4 my-4 border-b-4 border-solid border-gray-400">
+    <div className=" my-4 border-b-4 border-solid border-gray-400">
       <div className="flex justify-between items-center">
         <b>
           <h2> {product.name} </h2>
@@ -37,7 +37,7 @@ let Featured = ({ product, saveItemToCart }) => {
           src={product.image.src}
           alt={product.image.alt}
           layout="responsive"
-          width={1200}
+          width={1300}
           height={500}
           priority
         />
