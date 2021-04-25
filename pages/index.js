@@ -39,15 +39,13 @@ export default function Home() {
       const data = Object.values(res.data);
       setFeaturedProduct(data[0]);
     });
-    axios.get(`${firebaseUrl}/categories.json`).then((res) => {
-      const data = Object.values(res.data);
-      setCategories(data);
+    axios.get(`${firebaseUrl}/filter.json`).then((res) => {
+      const priceRanges = Object.values(res.data["price-range"]);
+      const categories = Object.values(res.data.categories);
+      setCategories(categories);
+      setPriceRange(priceRanges);
     });
     getProducts();
-    axios.get(`${firebaseUrl}/filter.json`).then((res) => {
-      const data = Object.values(res.data["price-range"]);
-      setPriceRange(data);
-    });
   }, []);
 
   useEffect(() => {
