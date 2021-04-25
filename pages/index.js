@@ -107,6 +107,7 @@ const Home = () => {
 
   const clearFilter = () => {
     setSelectedCategories([]);
+    setSelectedPriceRange({ selected: false });
   };
 
   return (
