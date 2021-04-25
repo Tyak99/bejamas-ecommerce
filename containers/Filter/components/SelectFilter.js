@@ -1,4 +1,4 @@
-const SelectFilter = ({ categories, handleFilter }) => {
+const SelectFilter = ({ categories, handleFilter, selectedCategories = [] }) => {
   return (
     <>
       <h4>
@@ -13,6 +13,7 @@ const SelectFilter = ({ categories, handleFilter }) => {
                 value={item}
                 name={item.toLowerCase()}
                 onChange={(e) => handleFilter(e)}
+                checked={selectedCategories.includes(item.toLowerCase())}
               />
               <h4 className="ml-4">{item}</h4>
             </div>

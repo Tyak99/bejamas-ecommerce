@@ -11,7 +11,7 @@ const Item = ({ item, sendToCart }) => {
       <Image
         src={item.image.src}
         alt={item.image.alt}
-        width={288}
+        width={350}
         height={488}
       />
       <button

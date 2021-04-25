@@ -107,6 +107,10 @@ export default function Home() {
     setSelectedCategories(updatedSelectedCategories);
   };
 
+  const clearFilter = () => {
+    setSelectedCategories([]);
+  };
+
   const handlePriceSorting = (products) => {
     const sortedProducts = [...products].sort((a, b) => {
       return sortByOrder === "desc" ? a.price - b.price : b.price - a.price;
@@ -154,7 +158,7 @@ export default function Home() {
         clearCart={clearCart}
       />
       <Featured saveItemToCart={saveItemToCart} product={featuredProduct} />
-      <div className="px-4 my-4">
+      <div>
         <div className="flex justify-between items-center">
           <h4>
             <b> Photography /</b> Premium Photos
@@ -167,12 +171,14 @@ export default function Home() {
           <img
             src="/filter.svg"
             alt="Filter icon"
-            className="w-7 lg:hidden"
+            width="24px"
+            height="24px"
+            className="lg:hidden"
             onClick={() => setOpenMobileCategoryModal(true)}
           />
         </div>
         <div className="lg:flex mt-12">
-          <WebFilter categories={categories} handleFilter={handleFilter} />
+          <WebFilter categories={categories} handleFilter={handleFilter} selectedCategories={selectedCategories} />
           <Items saveItemToCart={saveItemToCart} products={products} />
         </div>
       </div>
@@ -181,14 +187,16 @@ export default function Home() {
           categories={categories}
           handleFilter={handleFilter}
           closeModal={() => setOpenMobileCategoryModal(false)}
+          clearFilter={clearFilter}
+          selectedCategories={selectedCategories}
         />
       )}
     </div>
   );
 }
 
-// implement pagination
-// move category to backend
 // show empy in cart and items when they are empty
 // fix filter modal on mobile
-// add the two mobile filter buttons and implement them
+// move category to backend
+// implement pagination
+// upload to netlify
