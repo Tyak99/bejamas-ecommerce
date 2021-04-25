@@ -9,8 +9,9 @@ import SelectSort from "../components/Select";
 import axios from "axios";
 import { firebaseUrl } from "../variables";
 import SelectFilter from "../containers/Filter/components/SelectFilter";
+import { filterProducts, handleSorting } from "../services/Product";
 
-export default function Home() {
+const Home = () => {
   const [products, setProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState(null);
@@ -39,36 +40,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const data = [...products];
     if (selectedCategories.length < 1 && !selectedPriceRange.value) {
-      setDisplayedProducts(data);
+      setDisplayedProducts(products);
       return;
     }
-    const filteredProducts = data.filter((item) => {
-      let result;
-      if (!selectedCategories.length < 1) {
-        result = selectedCategories.includes(item.category.toLowerCase());
-        if (!result) return result;
-      }
-      if (selectedPriceRange.value) {
-        const priceRangeValue = selectedPriceRange.value;
-        if (priceRangeValue.lowerBoundary && !priceRangeValue.higherBoundary) {
-          result = item.price < priceRangeValue.lowerBoundary;
-        } else if (
-          !priceRangeValue.lowerBoundary &&
-          priceRangeValue.higherBoundary
-        ) {
-          result = item.price > priceRangeValue.higherBoundary;
-        } else {
-          result =
-            item.price > priceRangeValue.lowerBoundary &&
-            item.price < priceRangeValue.higherBoundary;
-        }
-      }
-      return result;
-    });
-
-    setDisplayedProducts(handleSorting(filteredProducts));
+    const filteredProducts = filterProducts(
+      products,
+      selectedCategories,
+      selectedPriceRange
+    );
+    const sortedProducts = handleSorting(filteredProducts, sortBy, sortByOrder);
+    setDisplayedProducts(sortedProducts);
   }, [selectedCategories, products, selectedPriceRange]);
 
   // Use this to stop page body scrolling when modal is open
@@ -82,7 +64,11 @@ export default function Home() {
 
   useEffect(() => {
     if (!sortBy) return;
-    const sortedProducts = handleSorting(displayedProducts);
+    const sortedProducts = handleSorting(
+      displayedProducts,
+      sortBy,
+      sortByOrder
+    );
     setDisplayedProducts(sortedProducts);
   }, [sortBy, sortByOrder]);
 
@@ -104,7 +90,7 @@ export default function Home() {
     setOpenCartModal(false);
   };
 
-  const handleFilter = (e) => {
+  const handleCategorySelect = (e) => {
     const category = e.target.name;
     const isChecked = e.target.checked;
 
@@ -121,38 +107,6 @@ export default function Home() {
 
   const clearFilter = () => {
     setSelectedCategories([]);
-  };
-
-  const handlePriceSorting = (products) => {
-    const sortedProducts = [...products].sort((a, b) => {
-      return sortByOrder === "desc" ? a.price - b.price : b.price - a.price;
-    });
-    return sortedProducts;
-  };
-
-  const handleAlphabeticalSorting = (products) => {
-    const sortedProducts = [...products].sort((a, b) => {
-      const nameA = a.name.toLowerCase();
-      const nameB = b.name.toLowerCase();
-      if (nameA < nameB) {
-        return sortByOrder === "desc" ? -1 : 1;
-      }
-      if (nameA > nameB) {
-        return sortByOrder === "desc" ? 1 : -1;
-      }
-      return 0;
-    });
-
-    return sortedProducts;
-  };
-
-  const handleSorting = (products) => {
-    if (sortBy === "alphabetically") {
-      return handleAlphabeticalSorting(products);
-    } else if (sortBy === "price") {
-      return handlePriceSorting(products);
-    }
-    return products;
   };
 
   return (
@@ -186,7 +140,7 @@ export default function Home() {
         <div className="lg:flex mt-12">
           <WebFilter
             categories={categories}
-            handleFilter={handleFilter}
+            handleFilter={handleCategorySelect}
             selectedCategories={selectedCategories}
             setPriceRange={setPriceRange}
             priceRange={priceRange}
@@ -199,7 +153,7 @@ export default function Home() {
       {openMobileCategoryModal && (
         <MobileFilter
           categories={categories}
-          handleFilter={handleFilter}
+          handleFilter={handleCategorySelect}
           closeModal={() => setOpenMobileCategoryModal(false)}
           clearFilter={clearFilter}
           selectedCategories={selectedCategories}
@@ -210,7 +164,9 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
+
+export default Home;
 
 // implement pagination
 // upload to netlify
