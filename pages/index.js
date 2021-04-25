@@ -21,7 +21,7 @@ export default function Home() {
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState({ selected: false, value: "" });
+  const [priceRange, setPriceRange] = useState({ selected: false });
 
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
@@ -55,9 +55,20 @@ export default function Home() {
         result = selectedCategories.includes(item.category.toLowerCase());
         if (!result) return result;
       }
-      if (priceRange.selected && priceRange.value) {
-        const priceRangeValue = JSON.parse(priceRange.value);
-        result = item.price < priceRangeValue.lowerBoundary;
+      if (priceRange.value) {
+        const priceRangeValue = priceRange.value;
+        if (priceRangeValue.lowerBoundary && !priceRangeValue.higherBoundary) {
+          result = item.price < priceRangeValue.lowerBoundary;
+        } else if (
+          !priceRangeValue.lowerBoundary &&
+          priceRangeValue.higherBoundary
+        ) {
+          result = item.price > priceRangeValue.higherBoundary;
+        } else {
+          result =
+            item.price > priceRangeValue.lowerBoundary &&
+            item.price < priceRangeValue.higherBoundary;
+        }
       }
       return result;
     });
@@ -68,9 +79,9 @@ export default function Home() {
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = "auto";
     }
   }, [openMobileCategoryModal]);
 
