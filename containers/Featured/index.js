@@ -2,7 +2,20 @@ import React from "react";
 import Image from "next/image";
 
 let Featured = ({ product, saveItemToCart }) => {
-  if (!product) return null;
+  if (!product)
+    return (
+      <div className='animate-pulse my-4 py-4'>
+        <Image
+          src="/feature-skeleton.svg"
+          alt="feature view skeleton"
+          layout="responsive"
+          width={1200}
+          height={600}
+          quality={50}
+          priority
+        />
+      </div>
+    );
 
   return (
     <div className="px-4 my-4 border-b-4 border-solid border-gray-400">
@@ -25,7 +38,7 @@ let Featured = ({ product, saveItemToCart }) => {
           alt={product.image.alt}
           layout="responsive"
           width={1200}
-          height={600}
+          height={500}
           priority
         />
         <div className="h-12 bg-gray-200 w-44 flex justify-center items-center relative bottom-12 -mb-8">
