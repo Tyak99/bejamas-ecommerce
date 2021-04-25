@@ -6,6 +6,8 @@ const MobileFilter = ({
   closeModal,
   clearFilter,
   selectedCategories,
+  setPriceRange,
+  priceRange
 }) => {
   return (
     <div className="fixed top-0 w-screen h-screen flex items-end flex-end">
@@ -29,6 +31,8 @@ const MobileFilter = ({
             categories={categories}
             handleFilter={handleFilter}
             selectedCategories={selectedCategories}
+            setPriceRange={setPriceRange}
+            priceRange={priceRange}
           />
         </div>
         <div className="h-full grid grid-cols-2 gap-4 mt-8">

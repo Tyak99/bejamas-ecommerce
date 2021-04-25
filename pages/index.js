@@ -21,11 +21,14 @@ export default function Home() {
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [priceRange, setPriceRange] = useState({ selected: false, value: '' });
+  
 
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
       const data = Object.values(res.data);
       setProducts(data);
+      setDisplayedProducts(data)
     });
   };
 
@@ -43,16 +46,25 @@ export default function Home() {
 
   useEffect(() => {
     const data = [...products];
-    if (selectedCategories.length < 1) {
+    if (selectedCategories.length < 1 && !priceRange.value) {
       setDisplayedProducts(data);
       return;
     }
     const filteredProducts = data.filter((item) => {
-      return selectedCategories.includes(item.category.toLowerCase());
+      let result;
+      if (!selectedCategories.length < 1) {
+        result = selectedCategories.includes(item.category.toLowerCase())
+        if (!result) return result;
+      }
+      if (priceRange.selected && priceRange.value) {
+        const priceRangeValue = JSON.parse(priceRange.value);
+        result = item.price < priceRangeValue.lowerBoundary;
+      }
+      return result;
     });
 
     setDisplayedProducts(handleSorting(filteredProducts));
-  }, [selectedCategories, products]);
+  }, [selectedCategories, products, priceRange]);
 
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
@@ -177,6 +189,8 @@ export default function Home() {
             categories={categories}
             handleFilter={handleFilter}
             selectedCategories={selectedCategories}
+            setPriceRange={setPriceRange}
+            priceRange={priceRange}
           />
           <Items saveItemToCart={saveItemToCart} products={displayedProducts} />
         </div>
@@ -188,6 +202,8 @@ export default function Home() {
           closeModal={() => setOpenMobileCategoryModal(false)}
           clearFilter={clearFilter}
           selectedCategories={selectedCategories}
+          setPriceRange={setPriceRange}
+          priceRange={priceRange}
         />
       )}
     </div>
