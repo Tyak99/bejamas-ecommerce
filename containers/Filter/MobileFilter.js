@@ -16,7 +16,7 @@ const MobileFilter = ({
               <b>Filter</b>
             </h2>
             <svg
-              class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
+              className="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 18 18"
               onClick={closeModal}

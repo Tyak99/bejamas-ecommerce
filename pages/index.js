@@ -17,10 +17,12 @@ const categories = [
   "Landmarks",
   "Cosmetics",
   "Electronics",
+  "Unavailable",
 ];
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState(null);
   const [sortBy, setSortBy] = useState(null);
   const [sortByOrder, setSortByOrder] = useState("desc");
@@ -32,12 +34,7 @@ export default function Home() {
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
       const data = Object.values(res.data);
-      if (selectedCategories.length < 1) {
-        return data;
-      }
-      return data.filter((item) => {
-        return selectedCategories.includes(item.category.toLowerCase());
-      });
+      setProducts(data);
     });
   };
 
@@ -46,18 +43,21 @@ export default function Home() {
       const data = Object.values(res.data);
       setFeaturedProduct(data[0]);
     });
+    getProducts();
   }, []);
 
   useEffect(() => {
-    getProducts().then((data) => {
-      if (sortBy) {
-        const sortedProducts = handleSorting(data);
-        setProducts(sortedProducts);
-      } else {
-        setProducts(data);
-      }
-    });
-  }, [selectedCategories]);
+    const data = [...products];
+    if (selectedCategories.length < 1) {
+      setDisplayedProducts(data)
+      return;
+    };
+    const filteredProducts = data.filter((item) => {
+      return selectedCategories.includes(item.category.toLowerCase());
+    })
+
+    setDisplayedProducts(handleSorting(filteredProducts))
+  }, [selectedCategories, products]);
 
   // Use this to stop page scrolling when modal is open
   useEffect(() => {
@@ -73,6 +73,12 @@ export default function Home() {
       );
     }
   }, [openMobileCategoryModal]);
+
+  useEffect(() => {
+    if (!sortBy) return;
+    const sortedProducts = handleSorting(displayedProducts);
+    setDisplayedProducts(sortedProducts);
+  }, [sortBy, sortByOrder]);
 
   const saveItemToCart = (item) => {
     const check = cartItems.findIndex((value) => {
@@ -143,12 +149,6 @@ export default function Home() {
     return products;
   };
 
-  useEffect(() => {
-    if (!sortBy) return;
-    const sortedProducts = handleSorting(products);
-    setProducts(sortedProducts);
-  }, [sortBy, sortByOrder]);
-
   return (
     <div className="mx-auto px-8">
       <Header
@@ -178,8 +178,12 @@ export default function Home() {
           />
         </div>
         <div className="lg:flex mt-12">
-          <WebFilter categories={categories} handleFilter={handleFilter} selectedCategories={selectedCategories} />
-          <Items saveItemToCart={saveItemToCart} products={products} />
+          <WebFilter
+            categories={categories}
+            handleFilter={handleFilter}
+            selectedCategories={selectedCategories}
+          />
+          <Items saveItemToCart={saveItemToCart} products={displayedProducts} />
         </div>
       </div>
       {openMobileCategoryModal && (
@@ -196,7 +200,6 @@ export default function Home() {
 }
 
 // show empy in cart and items when they are empty
-// fix filter modal on mobile
 // move category to backend
 // implement pagination
 // upload to netlify
