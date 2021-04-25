@@ -1,4 +1,5 @@
 const SelectFilter = ({ categories, handleFilter, selectedCategories = [] }) => {
+  if (categories.length < 1) return null
   return (
     <>
       <h4>
@@ -7,15 +8,15 @@ const SelectFilter = ({ categories, handleFilter, selectedCategories = [] }) => 
       <div className="mt-4">
         {categories.map((item) => {
           return (
-            <div className="flex items-center mt-4" key={item}>
+            <div className="flex items-center mt-4" key={item.id}>
               <input
                 type="checkbox"
-                value={item}
-                name={item.toLowerCase()}
+                value={item.name}
+                name={item.name.toLowerCase()}
                 onChange={(e) => handleFilter(e)}
-                checked={selectedCategories.includes(item.toLowerCase())}
+                checked={selectedCategories.includes(item.name.toLowerCase())}
               />
-              <h4 className="ml-4">{item}</h4>
+              <h4 className="ml-4">{item.name}</h4>
             </div>
           );
         })}

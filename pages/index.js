@@ -9,16 +9,6 @@ import SelectSort from "../components/Select";
 import axios from "axios";
 import { firebaseUrl } from "../variables";
 
-const categories = [
-  "People",
-  "Nature",
-  "Animals",
-  "Food",
-  "Landmarks",
-  "Cosmetics",
-  "Electronics",
-  "Unavailable",
-];
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -30,6 +20,7 @@ export default function Home() {
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getProducts = () => {
     return axios.get(`${firebaseUrl}/products.json`).then((res) => {
@@ -43,20 +34,24 @@ export default function Home() {
       const data = Object.values(res.data);
       setFeaturedProduct(data[0]);
     });
+    axios.get(`${firebaseUrl}/categories.json`).then((res) => {
+      const data = Object.values(res.data);
+      setCategories(data);
+    });
     getProducts();
   }, []);
 
   useEffect(() => {
     const data = [...products];
     if (selectedCategories.length < 1) {
-      setDisplayedProducts(data)
+      setDisplayedProducts(data);
       return;
-    };
+    }
     const filteredProducts = data.filter((item) => {
       return selectedCategories.includes(item.category.toLowerCase());
-    })
+    });
 
-    setDisplayedProducts(handleSorting(filteredProducts))
+    setDisplayedProducts(handleSorting(filteredProducts));
   }, [selectedCategories, products]);
 
   // Use this to stop page scrolling when modal is open
@@ -199,7 +194,6 @@ export default function Home() {
   );
 }
 
-// show empy in cart and items when they are empty
 // move category to backend
 // implement pagination
 // upload to netlify
