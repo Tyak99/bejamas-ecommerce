@@ -9,7 +9,7 @@ const CartItems = ({ products }) => {
                 <p>
                   <b>{item.name}</b>
                 </p>
-                <p className="text-gray-500">{`${item.price}`}</p>
+                <p className="text-gray-500">{`$${item.price}`}</p>
               </div>
               <div className="flex justify-end">
                 <img

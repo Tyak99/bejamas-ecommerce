@@ -26,26 +26,16 @@ export default function Home() {
     selected: false,
   });
 
-  const getProducts = () => {
-    return axios.get(`${firebaseUrl}/products.json`).then((res) => {
-      const data = Object.values(res.data);
-      setProducts(data);
-      setDisplayedProducts(data);
-    });
-  };
-
   useEffect(() => {
-    axios.get(`${firebaseUrl}/featured-products.json`).then((res) => {
-      const data = Object.values(res.data);
-      setFeaturedProduct(data[0]);
+    axios.get(`${firebaseUrl}/data.json`).then((res) => {
+      const { featuredProducts, products, filter } = res.data;
+
+      setFeaturedProduct(Object.values(featuredProducts)[0]);
+      setPriceRange(Object.values(filter.priceRange));
+      setCategories(Object.values(filter.categories));
+      setProducts(Object.values(products));
+      setDisplayedProducts(Object.values(products));
     });
-    axios.get(`${firebaseUrl}/filter.json`).then((res) => {
-      const priceRanges = Object.values(res.data["price-range"]);
-      const categories = Object.values(res.data.categories);
-      setCategories(categories);
-      setPriceRange(priceRanges);
-    });
-    getProducts();
   }, []);
 
   useEffect(() => {
@@ -81,7 +71,7 @@ export default function Home() {
     setDisplayedProducts(handleSorting(filteredProducts));
   }, [selectedCategories, products, selectedPriceRange]);
 
-  // Use this to stop page scrolling when modal is open
+  // Use this to stop page body scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
       document.body.style.overflow = "hidden";
@@ -222,6 +212,5 @@ export default function Home() {
   );
 }
 
-// move category to backend
 // implement pagination
 // upload to netlify
