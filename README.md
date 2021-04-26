@@ -3,7 +3,13 @@ This is a [Next.js](https://nextjs.org/) project for a Frontend Developer role a
 https://bejamas-ecommerce-psi.vercel.app
 ## Getting Started
 
-First, run the development server:
+First, install the packages:
+```bash
+npm install
+# or
+yarn
+```
+Second, run the development server:
 
 ```bash
 npm run dev
