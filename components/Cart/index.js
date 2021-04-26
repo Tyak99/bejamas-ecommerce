@@ -15,7 +15,7 @@ const Cart = ({ products, clearCart, openCartModal, setOpenCartModal }) => {
         )}
       </div>
       {openCartModal && (
-        <div className="p-2 z-10 bg-white min-h-20 absolute right-8 top-20 w-60 border border-gray-400">
+        <div className="p-2 z-10 bg-white min-h-20 absolute right-8 top-20 w-60 sm:w-72 border border-gray-400">
           <div className="flex justify-end">
             <p
               className="cursor-pointer"
