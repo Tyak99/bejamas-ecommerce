@@ -150,7 +150,7 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const request = await axios.get(`${firebaseUrl}/data.json`);
   const products = request.data;
 
