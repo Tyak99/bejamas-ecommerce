@@ -11,33 +11,17 @@ import { firebaseUrl } from "../variables";
 import SelectFilter from "../containers/Filter/components/SelectFilter";
 import { filterProducts, handleSorting } from "../services/Product";
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [displayedProducts, setDisplayedProducts] = useState([]);
-  const [featuredProduct, setFeaturedProduct] = useState(null);
+const Home = ({ products, categories, priceRange, featuredProduct }) => {
+  const [displayedProducts, setDisplayedProducts] = useState(products);
   const [sortBy, setSortBy] = useState(null);
   const [sortByOrder, setSortByOrder] = useState("desc");
   const [cartItems, setCartItems] = useState([]);
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState({
     selected: false,
   });
-
-  useEffect(() => {
-    axios.get(`${firebaseUrl}/data.json`).then((res) => {
-      const { featuredProducts, products, filter } = res.data;
-
-      setFeaturedProduct(Object.values(featuredProducts)[0]);
-      setPriceRange(Object.values(filter.priceRange));
-      setCategories(Object.values(filter.categories));
-      setProducts(Object.values(products));
-      setDisplayedProducts(Object.values(products));
-    });
-  }, []);
 
   useEffect(() => {
     if (selectedCategories.length < 1 && !selectedPriceRange.value) {
@@ -143,7 +127,6 @@ const Home = () => {
             categories={categories}
             handleFilter={handleCategorySelect}
             selectedCategories={selectedCategories}
-            setPriceRange={setPriceRange}
             priceRange={priceRange}
             selectedPriceRange={selectedPriceRange}
             setSelectedPriceRange={setSelectedPriceRange}
@@ -167,7 +150,18 @@ const Home = () => {
   );
 };
 
-export default Home;
+export async function getStaticProps(context) {
+  const request = await axios.get(`${firebaseUrl}/data.json`);
+  const products = request.data;
 
-// implement pagination
-// upload to netlify
+  return {
+    props: {
+      featuredProduct: Object.values(products.featuredProducts)[0],
+      products: Object.values(products.products),
+      priceRange: Object.values(products.filter.priceRange),
+      categories: Object.values(products.filter.categories)
+    },
+  };
+}
+
+export default Home;

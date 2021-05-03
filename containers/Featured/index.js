@@ -2,21 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 let Featured = ({ product, saveItemToCart }) => {
-  if (!product)
-    return (
-      <div className='animate-pulse my-4 py-4'>
-        <Image
-          src="/feature-skeleton.svg"
-          alt="feature view skeleton"
-          layout="responsive"
-          width={1200}
-          height={600}
-          quality={50}
-          priority
-        />
-      </div>
-    );
-
   return (
     <div className=" my-4 border-b-4 border-solid border-gray-400">
       <div className="flex justify-between items-center">
