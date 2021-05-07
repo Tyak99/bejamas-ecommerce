@@ -1,20 +1,20 @@
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import Featured from "../components/Featured";
-import Header from "../components/Header";
-import Items from "../components/Items";
-import MobileFilter from "../components/Filter/MobileFilter";
-import WebFilter from "../components/Filter/WebFilter";
-import SelectSort from "../components/Select";
-import axios from "axios";
-import { firebaseUrl } from "../variables";
-import SelectFilter from "../components/Filter/SelectFilter";
-import { filterProducts, handleSorting } from "../services/Product";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Featured from '../components/Featured';
+import Header from '../components/Header';
+import Items from '../components/Items';
+import MobileFilter from '../components/Filter/MobileFilter';
+import WebFilter from '../components/Filter/WebFilter';
+import SelectSort from '../components/Select';
+import variables from '../variables';
+import { filterProducts, handleSorting } from '../services/Product';
 
-const Home = ({ products, categories, priceRange, featuredProduct }) => {
+const Home = ({
+  products, categories, priceRange, featuredProduct,
+}) => {
   const [displayedProducts, setDisplayedProducts] = useState(products);
   const [sortBy, setSortBy] = useState(null);
-  const [sortByOrder, setSortByOrder] = useState("desc");
+  const [sortByOrder, setSortByOrder] = useState('desc');
   const [cartItems, setCartItems] = useState([]);
   const [openCartModal, setOpenCartModal] = useState(false);
   const [openMobileCategoryModal, setOpenMobileCategoryModal] = useState(false);
@@ -31,7 +31,7 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
     const filteredProducts = filterProducts(
       products,
       selectedCategories,
-      selectedPriceRange
+      selectedPriceRange,
     );
     const sortedProducts = handleSorting(filteredProducts, sortBy, sortByOrder);
     setDisplayedProducts(sortedProducts);
@@ -40,9 +40,9 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
   // Use this to stop page body scrolling when modal is open
   useEffect(() => {
     if (openMobileCategoryModal === true) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
   }, [openMobileCategoryModal]);
 
@@ -51,21 +51,17 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
     const sortedProducts = handleSorting(
       displayedProducts,
       sortBy,
-      sortByOrder
+      sortByOrder,
     );
     setDisplayedProducts(sortedProducts);
   }, [sortBy, sortByOrder]);
 
   const saveItemToCart = (item) => {
-    const check = cartItems.findIndex((value) => {
-      return value.id === item.id;
-    });
+    const check = cartItems.findIndex((value) => value.id === item.id);
     if (check === -1) {
       const updatedCart = [...cartItems, item];
       setCartItems(updatedCart);
       setOpenCartModal(true);
-    } else {
-      console.log("Item already exist in the cart");
     }
   };
 
@@ -83,7 +79,7 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
       updatedSelectedCategories = [...selectedCategories, category];
     } else {
       updatedSelectedCategories = [...selectedCategories].filter(
-        (item) => item !== category
+        (item) => item !== category,
       );
     }
     setSelectedCategories(updatedSelectedCategories);
@@ -106,21 +102,27 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
       <div>
         <div className="flex justify-between items-center">
           <h4>
-            <b> Photography /</b> Premium Photos
+            <b> Photography /</b>
+            Premium Photos
           </h4>
           <SelectSort
             setSortBy={setSortBy}
             sortByOrder={sortByOrder}
             setSortByOrder={setSortByOrder}
           />
-          <img
-            src="/filter.svg"
-            alt="Filter icon"
-            width="24px"
-            height="24px"
-            className="lg:hidden"
+          <button
+            className="focus:outline-none"
+            type="button"
             onClick={() => setOpenMobileCategoryModal(true)}
-          />
+          >
+            <img
+              src="/filter.svg"
+              alt="Filter icon"
+              width="24px"
+              height="24px"
+              className="lg:hidden"
+            />
+          </button>
         </div>
         <div className="lg:flex mt-12">
           <WebFilter
@@ -150,8 +152,8 @@ const Home = ({ products, categories, priceRange, featuredProduct }) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const request = await axios.get(`${firebaseUrl}/data.json`);
+export async function getServerSideProps() {
+  const request = await axios.get(`${variables.firebaseUrl}/data.json`);
   const products = request.data;
 
   return {
@@ -159,7 +161,7 @@ export async function getServerSideProps(context) {
       featuredProduct: Object.values(products.featuredProducts)[0],
       products: Object.values(products.products),
       priceRange: Object.values(products.filter.priceRange),
-      categories: Object.values(products.filter.categories)
+      categories: Object.values(products.filter.categories),
     },
   };
 }

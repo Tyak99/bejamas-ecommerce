@@ -4,22 +4,22 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Archivo']
+        sans: ['Archivo'],
       },
       height: {
-        '112': '28rem',
-        '128': '35rem',
-        '168': '42rem',
+        112: '28rem',
+        128: '35rem',
+        168: '42rem',
       },
       width: {
-        '1.5/5': '30%'
-      }
+        '1.5/5': '30%',
+      },
     },
   },
   variants: {
     extend: {
-      display: ['group-hover']
+      display: ['group-hover'],
     },
   },
   plugins: [],
-}
+};
