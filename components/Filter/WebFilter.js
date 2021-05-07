@@ -26,7 +26,11 @@ WebFilter.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleFilter: PropTypes.func.isRequired,
   selectedCategories: PropTypes.arrayOf(PropTypes.string).isRequired,
-  // priceRange: PropTypes.arrayOf()
+  priceRange: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedPriceRange: PropTypes.shape({
+    value: PropTypes.string,
+    selected: PropTypes.bool,
+  }).isRequired,
   setSelectedPriceRange: PropTypes.func.isRequired,
 };
 export default WebFilter;
