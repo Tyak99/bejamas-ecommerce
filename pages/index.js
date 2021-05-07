@@ -111,7 +111,7 @@ const Home = ({
             setSortByOrder={setSortByOrder}
           />
           <button
-            className="focus:outline-none"
+            className="focus:outline-none lg:hidden"
             type="button"
             onClick={() => setOpenMobileCategoryModal(true)}
           >
@@ -120,7 +120,6 @@ const Home = ({
               alt="Filter icon"
               width="24px"
               height="24px"
-              className="lg:hidden"
             />
           </button>
         </div>

@@ -1,7 +1,7 @@
 const CartItems = ({ products }) => (
   <div>
     {products.map((item) => (
-      <div className="mt-2">
+      <div className="mt-2" key={item.id}>
         <div className="grid grid-cols-2 border-b">
           <div>
             <p>
