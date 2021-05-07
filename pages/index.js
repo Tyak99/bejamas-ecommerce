@@ -1,14 +1,14 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Featured from "../containers/Featured";
+import Featured from "../components/Featured";
 import Header from "../components/Header";
-import Items from "../containers/Items";
-import MobileFilter from "../containers/Filter/MobileFilter";
-import WebFilter from "../containers/Filter/WebFilter";
+import Items from "../components/Items";
+import MobileFilter from "../components/Filter/MobileFilter";
+import WebFilter from "../components/Filter/WebFilter";
 import SelectSort from "../components/Select";
 import axios from "axios";
 import { firebaseUrl } from "../variables";
-import SelectFilter from "../containers/Filter/components/SelectFilter";
+import SelectFilter from "../components/Filter/SelectFilter";
 import { filterProducts, handleSorting } from "../services/Product";
 
 const Home = ({ products, categories, priceRange, featuredProduct }) => {

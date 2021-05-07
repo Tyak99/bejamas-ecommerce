@@ -1,5 +1,5 @@
 import React from "react";
-import SelectFilter from "./components/SelectFilter";
+import SelectFilter from "./SelectFilter";
 
 const WebFilter = ({
   categories,

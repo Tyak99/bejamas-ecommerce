@@ -1,4 +1,4 @@
-import CartItems from "./components/CartItems";
+import CartItems from "./CartItems";
 
 const Cart = ({ products, clearCart, openCartModal, setOpenCartModal }) => {
   return (

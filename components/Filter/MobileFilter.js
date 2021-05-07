@@ -1,4 +1,4 @@
-import SelectFilter from "./components/SelectFilter";
+import SelectFilter from "./SelectFilter";
 
 const MobileFilter = ({
   categories,
