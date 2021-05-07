@@ -12,7 +12,7 @@ const Featured = ({ product, saveItemToCart }) => (
       <div>
         <button
           type="button"
-          className="hidden sm:block bg-black text-white h-12 text-lg w-44"
+          className="hidden sm:block focus:outline-none bg-black text-white h-12 text-lg w-44"
           onClick={() => saveItemToCart(product)}
         >
           ADD TO CART
@@ -35,7 +35,7 @@ const Featured = ({ product, saveItemToCart }) => (
 
     <div>
       <button
-        className="sm:hidden bg-black text-white w-full h-12 text-lg"
+        className="sm:hidden bg-black text-white w-full h-12 text-lg focus:outline-none"
         onClick={() => saveItemToCart(product)}
         type="button"
       >
